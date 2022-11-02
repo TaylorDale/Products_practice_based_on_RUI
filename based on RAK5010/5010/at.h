@@ -33,9 +33,9 @@ at+set_config=cellular:XXX:Y:ZZZ: AAA:BBB:C----cellular config join parameters\n
 at+set_config=cellular:(XXX)----cellular AT unvarnished transmission\n \
 at+send=cellular:XXX----cellular send manually\n \
 at+help----show all at command supported\n \
-at+set_config=hologram:----set hologram card id\n \
+at+set_config=xsol:XXXXXXXX----set 8 char xsol card id\n \
 at+send=hologram:user:----send user define data\n \
-at+send=hologram:sensor----send device data\n \
+at+send=xsol:sensor----send device data\n \
 at+set_config=ble:work_mode:----ble mode choose\n \
 at+set_config=uart:work_mode:x----set uart work mode \n"
 

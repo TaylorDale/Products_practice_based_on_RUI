@@ -78,21 +78,26 @@ void app_task(void * p_context)
     //g_rui_cfg_t.g_cellular_cfg_t.hologram_card_num
     memset(send_data,0,256); 
 
-    // add the ID 
+    send_data[0] = '1'; // packet version ID
+
+    // add the ID
+    uint8_t startInd = 1;
     for (uint8_t i = 0; i < 8; i++)
     {
-        send_data[i] = g_rui_cfg_t.g_cellular_cfg_t.hologram_card_num[i];
+        send_data[startInd + i] = g_rui_cfg_t.g_cellular_cfg_t.hologram_card_num[i];
     }
 
+    sprintf(send_data+strlen(send_data),"Psk:8CHkZg9j; ");
     sprintf(send_data+strlen(send_data),"Acc:%.2f,%.2f,%.2f; ",_x,_y,_z);
     sprintf(send_data+strlen(send_data),"Tem:%.2f;Hum:%.2f; ",temp,humidity);
     sprintf(send_data+strlen(send_data),"Pre:%.2f; ",pressure);
     sprintf(send_data+strlen(send_data),"Lig:%.2f; ",light);
-    sprintf(send_data+strlen(send_data),"Lat(0-N,1-S):%d,%s,Lon(0-E,1-W):%d,%s; ",g_gps_data.LatitudeNS,lat_data,g_gps_data.LongitudaEW,lon_data); 
+    // sprintf(send_data+strlen(send_data),"Lat(0-N,1-S):%d,%s,Lon(0-E,1-W):%d,%s; ",g_gps_data.LatitudeNS,lat_data,g_gps_data.LongitudaEW,lon_data); 
+    sprintf(send_data+strlen(send_data),"Lat:%d,%s,Lon:%d,%s; ",g_gps_data.LatitudeNS,lat_data,g_gps_data.LongitudaEW,lon_data); 
 
     if(voltage>0)
     {   
-       sprintf(send_data+strlen(send_data),"Battery:%.2f; ",voltage);
+       sprintf(send_data+strlen(send_data),"Bat:%.2f; ",voltage);
     }
 
 

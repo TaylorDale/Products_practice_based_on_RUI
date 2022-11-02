@@ -186,8 +186,8 @@ void at_parse(char *cmd)
        strstr(cmd,"at+set_config=lora:send_interval:")==NULL && strstr(cmd,"at+get_config=lora:status")==NULL && strstr(cmd,"at+get_config=lora:channel")==NULL &&
        strstr(cmd,"at+set_config=lora:ch_mask:")==NULL && strstr(cmd,"at+set_config=ble:work_mode:")==NULL && strstr(cmd,"at+set_config=lorap2p:")==NULL &&
        strstr(cmd,"at+send=lorap2p:")==NULL  && strstr(cmd,"at+set_config=device:boot")==NULL  && strstr(cmd,"at+run")==NULL  &&
-       strstr(cmd,"at+set_config=lora:adr:")==NULL && strstr(cmd,"at+set_config=lora:dr:")==NULL && strstr(cmd,"at+set_config=hologram:")==NULL &&
-       strstr(cmd,"at+send=hologram:sensor")==NULL && strstr(cmd,"at+send=hologram:user:")==NULL && strstr(cmd, "at+set_config=device:uart_mode:")==NULL && strstr(cmd,"at+help")==NULL)
+       strstr(cmd,"at+set_config=lora:adr:")==NULL && strstr(cmd,"at+set_config=lora:dr:")==NULL && strstr(cmd,"at+set_config=xsol:")==NULL &&
+       strstr(cmd,"at+send=xsol:sensor")==NULL && strstr(cmd,"at+send=hologram:user:")==NULL && strstr(cmd, "at+set_config=device:uart_mode:")==NULL && strstr(cmd,"at+help")==NULL)
     {
         memset(at_rsp,0,1536);
         //RUI_LOG_PRINTF("Invalid at command!!");
@@ -687,11 +687,11 @@ void at_parse(char *cmd)
      }
 
      //at+set_config=hologram:
-     if(strstr(cmd,"at+set_config=hologram:")!= NULL)
+     if(strstr(cmd,"at+set_config=xsol:")!= NULL)
      {
          ptr = NULL;      
          index = 0;
-         ptr = strstr(cmd,"hologram:");
+         ptr = strstr(cmd,"xsol:");
          for(index;index<9;index++)
          {
             ptr++;
@@ -718,7 +718,7 @@ void at_parse(char *cmd)
         return;
      }
      //at+send=hologram:sensor
-     if(strstr(cmd,"at+send=hologram:sensor")!= NULL)
+     if(strstr(cmd,"at+send=xsol:sensor")!= NULL)
      {
         float _x = 0;
         float _y = 0;
