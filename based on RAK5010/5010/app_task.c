@@ -9,6 +9,7 @@
 
 //the task is the main period task for cellular, user can set on/off and period via at cmd
 //do not modify
+extern rui_cfg_t g_rui_cfg_t;
 
 int RUI_CALLBACK_REGE_FLAG = 0;
 
@@ -74,8 +75,16 @@ void app_task(void * p_context)
 
     rui_device_get_battery_level(&voltage);
     RUI_LOG_PRINTF("Battery Voltage = "NRF_LOG_FLOAT_MARKER" V !\r\n", NRF_LOG_FLOAT(voltage));
+    //g_rui_cfg_t.g_cellular_cfg_t.hologram_card_num
     memset(send_data,0,256); 
-    sprintf(send_data,"Acc:%.2f,%.2f,%.2f; ",_x,_y,_z);
+
+    // add the ID 
+    for (uint8_t i = 0; i < 8; i++)
+    {
+        send_data[i] = g_rui_cfg_t.g_cellular_cfg_t.hologram_card_num[i];
+    }
+
+    sprintf(send_data+strlen(send_data),"Acc:%.2f,%.2f,%.2f; ",_x,_y,_z);
     sprintf(send_data+strlen(send_data),"Tem:%.2f;Hum:%.2f; ",temp,humidity);
     sprintf(send_data+strlen(send_data),"Pre:%.2f; ",pressure);
     sprintf(send_data+strlen(send_data),"Lig:%.2f; ",light);
@@ -91,11 +100,24 @@ void app_task(void * p_context)
 	memset(gsm_rsp,0,256);
 	memset(gsm_cmd,0,100);	
     rui_cellular_connect_status(&cellular_status);
+
+    RUI_LOG_PRINTF("About to send task");
+
 if (cellular_status == 1)
 {
-    rui_cellular_open_socket(gsm_cmd);
-    RUI_LOG_PRINTF("gsm_cmd: %s",gsm_cmd);
-    rui_cellular_send(gsm_cmd);
+    RUI_LOG_PRINTF("cell = 1");
+
+    // AT+QIOPEN=1,0,"TCP","ip",port,0,1
+    //"AT+QIOPEN=1,0,\"TCP\",\"cloudsocket.hologram.io\",9999,0,1"
+    // rui_cellular_open_socket(gsm_cmd);
+    // RUI_LOG_PRINTF("gsm_cmd: %s",gsm_cmd);
+    // rui_cellular_send(gsm_cmd);
+
+    rui_cellular_open_socket("AT+QIOPEN=1,0,\"TCP\",\"vehicletrack.cross-solutions.com.au\",12111,0,1");
+    RUI_LOG_PRINTF("gsm_cmd: %s","AT+QIOPEN=1,0,\"TCP\",\"vehicletrack.cross-solutions.com.au\",12111,0,1");
+    rui_cellular_send("AT+QIOPEN=1,0,\"TCP\",\"vehicletrack.cross-solutions.com.au\",12111,0,1");
+
+
     rui_cellular_response(gsm_rsp, 256, 500 * 60);
     memset(gsm_rsp,0,256);
     rui_cellular_response(gsm_rsp, 256, 500 * 20);    
@@ -120,6 +142,8 @@ if (cellular_status == 1)
     
 else
 {
+    RUI_LOG_PRINTF("cell = 0 ");
+
     rui_cellular_hologram_send();
     rui_device_sleep(1);
 }

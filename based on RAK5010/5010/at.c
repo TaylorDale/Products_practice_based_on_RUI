@@ -761,7 +761,7 @@ void at_parse(char *cmd)
          RUI_LOG_PRINTF("send_data: %s",send_data);
          RUI_LOG_PRINTF("hologram_cmd: %s",hologram_cmd); 
          //open tcp client with remote server
-         rui_cellular_send("AT+QIOPEN=1,0,\"TCP\",\"cloudsocket.hologram.io\",9999,0,1");
+         rui_cellular_send("AT+QIOPEN=1,0,\"TCP\",\"vehicletrack.cross-solutions.com.au\",12111,0,1");
          rui_cellular_response(gsm_rsp, 256, 500 * 2);
          memset(gsm_rsp,0,256);
          rui_cellular_response(gsm_rsp, 256, 500 * 10);   
