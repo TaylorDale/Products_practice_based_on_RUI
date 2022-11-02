@@ -692,7 +692,7 @@ void at_parse(char *cmd)
          ptr = NULL;
          index = 0;
          ptr = strstr(cmd,"xsol:");
-         for(index;index<4;index++)
+         for(index;index<5;index++)
          {
             ptr++;
          }
