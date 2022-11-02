@@ -689,10 +689,10 @@ void at_parse(char *cmd)
      //at+set_config=hologram:
      if(strstr(cmd,"at+set_config=xsol:")!= NULL)
      {
-         ptr = NULL;      
+         ptr = NULL;
          index = 0;
          ptr = strstr(cmd,"xsol:");
-         for(index;index<9;index++)
+         for(index;index<4;index++)
          {
             ptr++;
          }
