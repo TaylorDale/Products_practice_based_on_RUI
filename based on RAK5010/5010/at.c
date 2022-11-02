@@ -198,7 +198,7 @@ void at_parse(char *cmd)
     }  
     if(strstr(cmd,"version")!= 0)
     {
-        char ver[48]="Firmware Version: RUI v";
+        char ver[48]="XSOLware Version: RUI v";
         strcat(ver, RUI_VERSION);
 		//RUI_LOG_PRINTF("%s", ver);
         memset(at_rsp,0,1536);
